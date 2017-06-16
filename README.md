@@ -1,0 +1,2 @@
+SObjectizer is a small framework which simplifies the development of multithreaded and concurrent applications in C++. 
+It has been used by different types of projects: from small utilities to large distributed and highly loaded applications.
