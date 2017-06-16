@@ -1,0 +1,26 @@
+#
+
+os: Visual Studio 2017
+
+environment:
+  matrix:
+  - TARGET: desktop
+    COMPILER: msvc32
+  - TARGET: desktop
+    COMPILER: msvc64
+
+install:
+- cinst ninja
+- set PATH=C:/tools/ninja;%PATH%
+
+- IF "%TARGET%" == "desktop" IF "%COMPILER%" == "mingw" IF NOT EXIST %APPVEYOR_BUILD_FOLDER%\x86_64-6.3.0-release-posix-seh-rt_v5-rev1.7z powershell -Command "(new-object System.Net.WebClient).Downloadfile('https://sourceforge.net/projects/mingw-w64/files/Toolchains targetting Win64/Personal Builds/mingw-builds/6.3.0/threads-posix/seh/x86_64-6.3.0-release-posix-seh-rt_v5-rev1.7z', 'x86_64-6.3.0-release-posix-seh-rt_v5-rev1.7z')"
+- IF "%TARGET%" == "desktop" IF "%COMPILER%" == "mingw" cd C:\tools && 7z x %APPVEYOR_BUILD_FOLDER%\x86_64-6.3.0-release-posix-seh-rt_v5-rev1.7z && cd %APPVEYOR_BUILD_FOLDER%
+
+
+build_script:
+- IF "%TARGET%" == "desktop" IF "%COMPILER%" == "msvc32" call ci\appveyor-desktop-x86.bat
+- IF "%TARGET%" == "desktop" IF "%COMPILER%" == "msvc64" call ci\appveyor-desktop-x64.bat
+- IF "%TARGET%" == "desktop" IF "%COMPILER%" == "mingw" call ci\appveyor-desktop-mingw.bat
+
+cache:
+- x86_64-6.3.0-release-posix-seh-rt_v5-rev1.7z
