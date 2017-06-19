@@ -8,7 +8,7 @@ matrix:
     compiler: gcc
     env:
     - TARGET=desktop
-    - BUILD_TYPE=nocoverage
+    - BUILD_TYPE=coverage
     - CXX=g++-4.8
     - GCOV=/usr/bin/gcov-4.8
     addons:
@@ -47,4 +47,5 @@ script:
 - sync
 
 after_success:
-- if [ "$TRAVIS_OS_NAME" == "linux" ] && [ "$TARGET" == "desktop" ] && [ "BUILD_TYPE" == "coverage" ]; then coveralls --gcov $GCOV -i src/ --gcov-options '\-lp' > /dev/null; fi
+- if [ "$BUILD_TYPE" == "coverage" ]; then make coverage; bash <(curl -s https://codecov.io/bash);
+#- if [ "$TRAVIS_OS_NAME" == "linux" ] && [ "$TARGET" == "desktop" ] && [ "$BUILD_TYPE" == "coverage" ]; then coveralls --gcov $GCOV -i src/ --gcov-options '\-lp' > /dev/null; fi
