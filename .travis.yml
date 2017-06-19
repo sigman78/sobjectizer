@@ -1,17 +1,35 @@
 #
 
-addons:
-  apt:
-    packages:
-    - g++-4.8
-
 matrix:
   include:
   - language: cpp
     os: linux
     dist: trusty
     compiler: gcc
-    env: TARGET=desktop
+    env:
+    - TARGET=desktop
+    - BUILD_TYPE=nocoverage
+    - CXX=g++-4.8
+    - GCOV=/usr/bin/gcov-4.8
+    addons:
+      apt:
+        packages:
+        - g++-4.8
+  - language: cpp
+    os: linux
+    dist: trusty
+    compiler: gcc
+    env:
+    - TARGET=desktop
+    - BUILD_TYPE=nocoverage
+    - CXX=g++-4.9
+    - GCOV=/usr/bin/gcov-4.9
+    addons:
+      apt:
+        sources:
+        - ubuntu-toolchain-r-test
+        packages:
+        - g++-4.9
   - language: cpp
     os: osx
     compiler: clang
@@ -29,4 +47,4 @@ script:
 - sync
 
 after_success:
-- if [ "$TRAVIS_OS_NAME" == "linux" ] && [ "$TARGET" == "desktop" ]; then coveralls --gcov /usr/bin/gcov-4.8 -i src/ --gcov-options '\-lp' > /dev/null; fi
+- if [ "$TRAVIS_OS_NAME" == "linux" ] && [ "$TARGET" == "desktop" ] && [ "BUILD_TYPE" == "coverage" ]; then coveralls --gcov $GCOV -i src/ --gcov-options '\-lp' > /dev/null; fi
