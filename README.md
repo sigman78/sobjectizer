@@ -6,5 +6,4 @@ SUPPORTED PLATFORMS
 
 Platforms:
 *  **Windows** [![Build status](https://ci.appveyor.com/api/projects/status/79lbvymst56h5co2/branch/master?svg=true)](https://ci.appveyor.com/project/sigman78/sobjectizer/branch/master)
-
-
+*  **Linux** & **OSX** [![Build Status](https://travis-ci.org/sigman78/sobjectizer.svg?branch=master)](https://travis-ci.org/sigman78/sobjectizer)
